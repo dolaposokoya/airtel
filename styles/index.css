@@ -1,0 +1,181 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    overflow-x: hidden;
+    line-height: 1.5;
+    outline: none;
+}
+
+body {
+    background-color: white;
+    position: relative;
+}
+
+.membersip {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.messages {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#alert_box, .message {
+    position: fixed;
+    top: 5em;
+    padding: .5em 1em;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 3px;
+    z-index: 222;
+}
+
+.warning {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: .7em 1em;
+    border-radius: 3px;
+}
+
+.alert {
+    color: whitesmoke;
+    font-family: var(--Poppins);
+    font-size: .8em;
+}
+
+.cross {
+    margin-left: .5em;
+    cursor: pointer;
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-wrapper form {
+    background-color: var(--theme-color);
+    margin: 4em 0em;
+    padding: .9em .2em;
+    width: 90vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    -webkit-box-shadow: -1px 8px 10px -1px rgba(0, 0, 0, 0.8);
+    box-shadow: -1px -3px 5px -1px rgba(0, 0, 0, 0.8);
+}
+
+
+.form-wrapper {
+    width: 90%;
+}
+
+.address-wrapper {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.address-wrapper .form-wrapper {
+    margin: 0em .3em;
+    width: 97% !important;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
+
+.address-wrapper .form-wrapper input {
+    width: 90% !important;
+}
+
+.form-wrapper input, .form-wrapper span, .form-wrapper select, .form-wrapper textarea {
+    width: 100%;
+    outline: none;
+}
+
+.form-wrapper .icons {
+    padding: .3em 0em;
+    overflow: hidden;
+}
+
+.form-wrapper .icons label {
+    font-family: var(--Poppins);
+    overflow: hidden;
+    font-weight: 400;
+    color: white;
+}
+
+.form-wrapper input, .form-wrapper select {
+    padding: .7em .3em;
+    border: none;
+    color: var(--Bluis-Gray);
+    font-family: var(--Poppins);
+    font-weight: 400;
+}
+
+.phone-message {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: .5em;
+}
+
+.error-text {
+    color: rgb(251, 9, 9);
+    font-size: .8em;
+    font-family: var(--Poppins);
+}
+
+.member-add {
+    cursor: pointer;
+    margin: 1em 0em;
+    margin-top: 2em;
+    padding: .7em 1.5em;
+    background-color: var(--white-smoke);
+    border: none;
+    font-family: var(--Poppins);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--theme-color);
+    transition: transform 1.1s;
+}
+
+.member-add:hover {
+    transform: scale(.9);
+}
+
+@media screen and (min-width: 580px) {
+    .container-wrapper form {
+        width: 550px;
+    }
+
+    .address-wrapper {
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+@media screen and (min-width: 910px) {
+    .container-wrapper form {
+        width: 700px;
+    }
+}

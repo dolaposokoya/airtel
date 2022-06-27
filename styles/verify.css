@@ -1,0 +1,149 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    overflow-x: hidden;
+    line-height: 1.5;
+    outline: none;
+}
+
+body {
+    background-color: var(--white-smoke);
+    position: relative;
+}
+
+.membersip {
+    position: relative;
+}
+
+.membersip {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.messages {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#alert_box, .message {
+    position: fixed;
+    top: 5em;
+    padding: .5em 1em;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 3px;
+    z-index: 222;
+}
+
+.warning {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: .7em 1em;
+    border-radius: 3px;
+}
+
+.alert {
+    color: whitesmoke;
+    font-family: var(--Poppins);
+    font-size: .8em;
+}
+
+.cross {
+    margin-left: .5em;
+    cursor: pointer;
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 53.5vh;
+    width: 100vw;
+}
+
+.container-wrapper .volunteer-view form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--light-blue);
+    padding: 2em 0em;
+    -webkit-box-shadow: -1px 8px 10px -1px rgba(0, 0, 0, 0.8);
+    box-shadow: -1px 8px 10px -1px rgba(0, 0, 0, 0.8);
+    border-radius: 3px;
+    width: 80vw;
+}
+
+form input {
+    padding: .8em 0em;
+    padding-left: .5em;
+    border: none;
+    font-family: var(--Poppins);
+    font-size: .9em;
+    width: 70%;
+    margin-bottom: 1.2em;
+}
+
+form button {
+    padding: .5em 3em;
+    color: var(--light-blue);
+    background-color: var(--white-smoke);
+    font-family: var(--Poppins);
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: 1s all;
+}
+
+form button:hover {
+    transform: scale(.8);
+}
+
+.volunteer-data {
+    margin-top: 2em;
+    background-color: var(--light-blue);
+    padding: 1.3em 1em;
+    width: 80vw;
+    border-radius: 3px;
+    transition: 1s all;
+}
+
+.volunteer-data h4 {
+    font-family: var(--Poppins);
+    font-size: 1em;
+    font-weight: 400;
+    color: var(--white-smoke);
+    margin-top: .3em;
+}
+
+@media screen and (min-width: 870px) {
+    .container-wrapper .volunteer-view form, .volunteer-data {
+        width: 70vw;
+    }
+}
+
+@media screen and (min-width: 950px) {
+    .container-wrapper .volunteer-view form, .volunteer-data {
+        width: 50vw;
+    }
+}
+
+@media screen and (min-width: 1050px) {
+    .container-wrapper .volunteer-view form, .volunteer-data {
+        width: 600px;
+    }
+}
