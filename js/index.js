@@ -12,6 +12,8 @@ const smedan_no = document.getElementById('smedan_no');
 let error = false;
 
 $(document).ready(async () => {
+    $('#cug').css('display', 'none');
+    $('#odu').css('display', 'none');
     setTimeout(() => {
         $('.loader').css('display', 'none')
         $('html, body').animate({
@@ -175,6 +177,7 @@ function checkTextInput(event) {
         }
     }, 1);
 }
+
 function focusText(event) {
     setTimeout(() => {
         if (event.value === '') {
@@ -198,24 +201,6 @@ function checkNumberInput(event) {
     }, 1)
 }
 
-// $('#smedan_no').on('focus', function () {
-//     try {
-//         setTimeout(() => {
-//             if (this.value === '') {
-//                 $(`.${this.id}`).text(`Please enter ${this.placeholder}`)
-//             }
-//             else {
-//                 console.log('event value not empty onfocus', this.value && this.value)
-//                 $(`.${this.id}`).text('')
-//             }
-//         }, 1);
-//         console.log('this.value onfocus', this.name)
-//     } catch (error) {
-//         $(".alert-warning").text(error.message);
-//         $(".messages").css('display', 'flex');
-//         $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
-//     }
-// });
 
 $('#smedan_register').on('change', function () {
     try {
@@ -231,6 +216,35 @@ $('#smedan_register').on('change', function () {
             $(`.smedan_register`).text('')
             $('.heref').css('display', 'none');
             $('.heref').fadeOut('slow');
+        }
+    } catch (error) {
+        $(".alert-warning").text(error.message);
+        $(".messages").css('display', 'flex');
+        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+    }
+});
+
+$('#service').on('change', function () {
+    try {
+        console.log('THis vakeu',this.value)
+        if (this.value === 'Select option') {
+            $(`.service`).text(`Please select service`)
+            $('#cug').fadeOut('slow');
+            $('#odu').fadeOut('slow');
+        }
+        else if (this.value === 'cug') {
+            $('#odu').fadeOut('slow');
+            $('#cug').fadeIn('slow');
+            $('#cug').css('display', 'flex');
+        }
+        else if (this.value === 'odu') {
+            $('#cug').fadeOut('slow');
+            $('#odu').fadeIn('slow');
+            $('#odu').css('display', 'flex');
+        }
+        else {
+            $('#cug').css('display', 'none');
+            $('#odu').css('display', 'none');
         }
     } catch (error) {
         $(".alert-warning").text(error.message);
