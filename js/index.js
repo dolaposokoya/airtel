@@ -161,9 +161,9 @@ const registerForCug = async (event) => {
                             error = false;
                             $(".modal-text").text(data.message);
                             $(".modal").css('display', 'flex');
-                            clearInput()
                             $(".warning").css('background-color', 'hsl(134, 61%, 41%)');
                             setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+                            clearInput()
                         }
                     }
                     else {
@@ -238,9 +238,9 @@ const registerForOdu = async (event) => {
                             error = false;
                             $(".modal-text").text(data.message);
                             $(".modal").css('display', 'flex');
-                            clearInput()
                             $(".warning").css('background-color', 'hsl(134, 61%, 41%)');
                             setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+                            clearInput()
                         }
                     }
                     else {
@@ -414,4 +414,5 @@ $('#new_line').on('change', function () {
 const clearInput = async () => {
     $("#name").val('');
     $("#airtel_number").val('');
+    location.reload();
 }
