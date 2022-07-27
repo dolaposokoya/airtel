@@ -1,6 +1,6 @@
 <?php
 $dbServer = "localhost";
-$dbUserName =  'global76_airtel';
+$dbUserName =  'root';
 $dbPassword = '';
 // $dbPassword = 'GlobalSight@21';
 $databaseName = "global76_airtel";

@@ -1,4 +1,6 @@
 const user_name = document.getElementById('name');
+const customer_mobile = document.getElementById('customer_mobile');
+const customer_name = document.getElementById('customer_name');
 const multi_line = document.getElementById('multi_line');
 const multi_line_number = document.getElementById('multi_line_number');
 const new_line = document.getElementById('new_line');
@@ -32,6 +34,23 @@ const closeMessage = async () => {
 const closeModal = async (event) => {
     event.preventDefault()
     $('.modal').fadeOut('slow');
+}
+
+const validateOduInput = async () => {
+    let valid = true;
+    $(".messages").css('display', 'none');
+    if (customer_name.value === '') {
+        console.log('user_name.value', user_name.value)
+        valid = false;
+    }
+    if (customer_mobile.value === '') {
+        valid = false
+    }
+    if (address.value === '') {
+        valid = false;
+    }
+
+    return { valid }
 }
 
 const validateInput = async () => {
@@ -73,7 +92,16 @@ const validateInput = async () => {
 }
 
 const addSTdCode = (number) => {
-    return `+234${number.substring(1)}`
+    const newNum = number.toString();
+    if (newNum.includes("+234")) {
+        return newNum;
+    }
+    else if (newNum.charAt(0) === '0' || newNum.charAt(0) === 0) {
+        return `+234${newNum.substring(1)}`
+    }
+    else {
+        return `+234${number}`
+    }
 }
 
 const registerForCug = async (event) => {
@@ -160,7 +188,7 @@ const registerForOdu = async (event) => {
     try {
         event.preventDefault();
         const formData = {};
-        const { valid } = await validateInput();
+        const { valid } = await validateOduInput();
         $(document).ready(async () => {
             $('.loader').css('display', 'flex')
         })
@@ -179,8 +207,8 @@ const registerForOdu = async (event) => {
             $(document).ready(async () => {
                 $('.loader').css('display', 'flex')
             })
-            formData.name = user_name.value
-            formData.contact_mobile = addSTdCode(contact_mobile.value)
+            formData.customer_name = customer_name.value
+            formData.customer_mobile = addSTdCode(customer_mobile.value)
             formData.address = address.value
             const apiURl = `controllers/register_odu.php`;
             $.ajax({
@@ -233,6 +261,7 @@ const registerForOdu = async (event) => {
     }
 }
 
+
 function changeTextToUpperCase(event) {
     setTimeout(function () {
         event.value = event.value.toUpperCase();
@@ -244,6 +273,7 @@ function changeTextToUpperCase(event) {
         }
     }, 3);
 }
+
 
 function checkTextInput(event) {
     setTimeout(() => {
@@ -272,7 +302,7 @@ function focusText(event) {
 function checkNumberInput(event) {
     setTimeout(function () {
         if (event.value.length < 11) {
-            $(`.${event.id}`).text('Phone number should be 11')
+            $(`.${event.id}`).text(`${event.placeholder} should be 11`)
         }
         else if (event.value.length === 11) {
             $(`.${event.id}`).text('')
@@ -305,7 +335,7 @@ $('#smedan_register').on('change', function () {
 
 $('#service').on('change', function () {
     try {
-        console.log('THis vakeu',this.value)
+        console.log('THis vakeu', this.value)
         if (this.value === 'Select option') {
             $(`.service`).text(`Please select service`)
             $('#cug').fadeOut('slow');

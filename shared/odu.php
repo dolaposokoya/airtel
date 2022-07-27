@@ -3,15 +3,15 @@
         <div class="icons">
             <label>Full Name</label>
         </div>
-        <input placeholder="Full Name" name="name" type="text" class="form-input" id="name" autocomplete="off" required onfocus="focusText(this)" onkeydown="changeTextToUpperCase(this)" />
-        <span class="error-text name"></span>
+        <input placeholder="Full Name" name="name" type="text" class="form-input" id="customer_name" autocomplete="off" required onfocus="focusText(this)" onkeydown="changeTextToUpperCase(this)" />
+        <span class="error-text customer_name"></span>
     </div>
     <div class="form-wrapper">
         <div class="icons">
             <label>Contact Number</label>
         </div>
-        <input placeholder="Contact Number" name="Contact Number" type="text" class="form-input" id="contact_number" autocomplete="off" required onfocus="focusText(this)" onkeydown="changeTextToUpperCase(this)" />
-        <span class="error-text contact_number"></span>
+        <input placeholder="Contact Number" name="Contact Number" type="text" class="form-input" id="customer_mobile" autocomplete="off" required onfocus="focusText(this)" onkeydown="checkNumberInput(this)" />
+        <span class="error-text customer_mobile"></span>
     </div>
     <div class="form-wrapper">
         <div class="icons">

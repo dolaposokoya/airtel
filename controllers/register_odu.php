@@ -49,8 +49,9 @@ function createAirtelOduTable($conn)
 {
     $sql = "CREATE TABLE IF NOT EXISTS airtel_odu (
         id INT(20) UNSIGNED AUTO_INCREMENT  PRIMARY KEY NOT NULL,
-        profile_id varchar(255) DEFAULT NULL,
-        name varchar(255) NOT NULL,
+        customer_id varchar(255) DEFAULT NULL,
+        customer_name varchar(255) NOT NULL,
+        customer_mobile varchar(255) NOT NULL,
         address varchar(256) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -66,12 +67,12 @@ function createAirtelOduTable($conn)
 function makeOduRequest($conn)
 {
     try {
-        $name = test_data($_POST['name']);
-        $contact_mobile = test_data($_POST['contact_mobile']);
+        $customer_name = test_data($_POST['customer_name']);
+        $customer_mobile = test_data($_POST['customer_mobile']);
         $address = test_data($_POST['address']);
-        if (!empty($name) && !empty($contact_mobile) && !empty($address)) {
-            $profile_id =  uniqid(5);
-            $query = "INSERT INTO airtel_odu (profile_id,name, contact_mobile,address) VALUES ('" . mysqli_real_escape_string($conn, $profile_id) . "','" . mysqli_real_escape_string($conn, $name) . "','" . mysqli_real_escape_string($conn, $contact_mobile) . "','" . mysqli_real_escape_string($conn, $address) . "');";
+        if (!empty($customer_name) && !empty($customer_mobile) && !empty($address)) {
+            $customer_id =  uniqid(5);
+            $query = "INSERT INTO airtel_odu (customer_id, customer_name, customer_mobile,address) VALUES ('" . mysqli_real_escape_string($conn, $customer_id) . "','" . mysqli_real_escape_string($conn, $customer_name) . "','" . mysqli_real_escape_string($conn, $customer_mobile) . "','" . mysqli_real_escape_string($conn, $address) . "');";
             $result = mysqli_query($conn, $query);
             if ($result == 0) {
                 $data['success'] = false;
