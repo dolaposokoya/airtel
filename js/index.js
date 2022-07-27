@@ -69,6 +69,10 @@ const validateInput = async () => {
     return { valid }
 }
 
+const addSTdCode = (number) => {
+    return `+234${number.substring(1)}`
+}
+
 const registerForCug = async (event) => {
     try {
         event.preventDefault();
@@ -92,17 +96,13 @@ const registerForCug = async (event) => {
             $(document).ready(async () => {
                 $('.loader').css('display', 'flex')
             })
-
             formData.name = user_name.value
-            formData.contact_mobile = contact_mobile.value
-            formData.multi_line_number = multi_line_number.value
-            formData.airtel_number = airtel_number.value
-            formData.other_number = other_number.value
+            formData.contact_mobile = addSTdCode(contact_mobile.value)
+            formData.multi_line_number = multi_line_number.value !== '' ? multi_line_number.value : 'Null';
+            formData.airtel_number = addSTdCode(airtel_number.value)
             formData.smedan_number = smedan_no.value
-            let letter = other_number.value.substring(1);
-            formData.other_number = other_number.value !== '' ? `234${letter}` : '';
+            formData.other_number = other_number.value !== '' ? addSTdCode(other_number.value) : 'Null';
             const apiURl = `controllers/register.php`;
-            console.log('Form Data', JSON.stringify(formData))
             $.ajax({
                 method: "POST",
                 url: apiURl,
@@ -122,7 +122,6 @@ const registerForCug = async (event) => {
                             $(".modal-text").text(data.message);
                             $(".modal").css('display', 'flex');
                             setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
-
                         }
                         else if (data.success === true) {
                             $(document).ready(async () => {
@@ -148,6 +147,9 @@ const registerForCug = async (event) => {
     } catch (error) {
         $(".modal-text").text(error.message);
         $(".modal").css('display', 'flex');
+        $(document).ready(async () => {
+            $('.loader').css('display', 'none')
+        })
     }
 }
 

@@ -26,7 +26,7 @@ include("./root.php");
 
 <body>
     <?php
-    // include("./shared/loader.php");
+    include("./shared/loader.php");
     ?>
     <div class="modal">
         <div class="modal-body">

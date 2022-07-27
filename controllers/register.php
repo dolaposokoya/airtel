@@ -1,6 +1,5 @@
 <?php
 include('./authentication.php');
-include('./sendMail.php');
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $_SESSION["ID"] = 100;
     include('../database.php');
