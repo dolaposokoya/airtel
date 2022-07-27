@@ -7,6 +7,7 @@ const airtel_number = document.getElementById('airtel_number');
 const contact_mobile = document.getElementById('contact_number');
 const smedan_register = document.getElementById('smedan_register');
 const smedan_no = document.getElementById('smedan_no');
+const address = document.getElementById('address');
 
 
 let error = false;
@@ -104,7 +105,84 @@ const registerForCug = async (event) => {
             formData.airtel_number = addSTdCode(airtel_number.value)
             formData.smedan_number = smedan_no.value
             formData.other_number = other_number.value !== '' ? addSTdCode(other_number.value) : 'Null';
-            const apiURl = `controllers/register.php`;
+            const apiURl = `controllers/register_cug.php`;
+            $.ajax({
+                method: "POST",
+                url: apiURl,
+                dataType: 'json',
+                data: formData,
+                beforeSend: function (data) {
+                    $(".member_add").html("Sending Request....");
+                    setTimeout(() => { $(".member_add").html("Submit Request") }, 3500);
+                },
+                success: async (data) => {
+                    if (data) {
+                        if (data.success === false) {
+                            $(document).ready(async () => {
+                                $('.loader').css('display', 'none')
+                            })
+                            error = true;
+                            $(".modal-text").text(data.message);
+                            $(".modal").css('display', 'flex');
+                            setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+                        }
+                        else if (data.success === true) {
+                            $(document).ready(async () => {
+                                $('.loader').css('display', 'none')
+                            })
+                            error = false;
+                            $(".modal-text").text(data.message);
+                            $(".modal").css('display', 'flex');
+                            clearInput()
+                            $(".warning").css('background-color', 'hsl(134, 61%, 41%)');
+                            setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+                        }
+                    }
+                    else {
+                        error = true;
+                        $(".modal-text").text('Something went wrong');
+                        $(".modal").css('display', 'flex');
+                        setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+                    }
+                }
+            });
+        }
+    } catch (error) {
+        $(".modal-text").text(error.message);
+        $(".modal").css('display', 'flex');
+        $(document).ready(async () => {
+            $('.loader').css('display', 'none')
+        })
+    }
+}
+
+const registerForOdu = async (event) => {
+    try {
+        event.preventDefault();
+        const formData = {};
+        const { valid } = await validateInput();
+        $(document).ready(async () => {
+            $('.loader').css('display', 'flex')
+        })
+        if (valid === false) {
+            $(document).ready(async () => {
+                $('.loader').css('display', 'none')
+            })
+            $(".alert-warning").text('Some fields are empty');
+            $(".messages").css('display', 'flex');
+            $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+            setTimeout(() => {
+                $(".messages").css('display', 'none');
+            }, 5000);
+        }
+        else {
+            $(document).ready(async () => {
+                $('.loader').css('display', 'flex')
+            })
+            formData.name = user_name.value
+            formData.contact_mobile = addSTdCode(contact_mobile.value)
+            formData.address = address.value
+            const apiURl = `controllers/register_odu.php`;
             $.ajax({
                 method: "POST",
                 url: apiURl,
@@ -177,6 +255,7 @@ function checkTextInput(event) {
         }
     }, 1);
 }
+
 
 function focusText(event) {
     setTimeout(() => {
@@ -252,6 +331,7 @@ $('#service').on('change', function () {
         $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
     }
 });
+
 $('#multi_line').on('change', function () {
     try {
         if (this.value === 'Select option') {
