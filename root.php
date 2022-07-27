@@ -18,7 +18,7 @@
     }
 
     :root {
-        --theme-color: #016d3b;
+        --theme-color: #ed1c24;
         --Jersey: Jersey;
         --DigitalMono: DigitalMono;
         --Digital: Digital;

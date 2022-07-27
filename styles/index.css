@@ -9,9 +9,13 @@
 }
 
 body {
-    background-color: white;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+
 
 .membersip {
     position: relative;
@@ -19,6 +23,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 100vw;
 }
 
 .messages {
@@ -70,7 +75,6 @@ body {
 }
 
 .container-wrapper form {
-    background-color: var(--theme-color);
     margin: 4em 0em;
     padding: .9em .2em;
     width: 90vw;
@@ -78,56 +82,70 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    -webkit-box-shadow: -1px 8px 10px -1px rgba(0, 0, 0, 0.8);
-    box-shadow: -1px -3px 5px -1px rgba(0, 0, 0, 0.8);
 }
-
 
 .form-wrapper {
-    width: 90%;
-}
-
-.address-wrapper {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-}
-
-.address-wrapper .form-wrapper {
     margin: 0em .3em;
-    width: 97% !important;
+    width: 100% !important;
     display: flex;
     flex-direction: column;
-    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2em;
 }
 
-.address-wrapper .form-wrapper input {
-    width: 90% !important;
+.multi_view, .no_new_line, .yes_new_line {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .form-wrapper input, .form-wrapper span, .form-wrapper select, .form-wrapper textarea {
-    width: 100%;
-    outline: none;
+    width: 95%;
 }
 
 .form-wrapper .icons {
     padding: .3em 0em;
     overflow: hidden;
+    width: 95%;
 }
+
 
 .form-wrapper .icons label {
     font-family: var(--Poppins);
     overflow: hidden;
     font-weight: 400;
-    color: white;
+    font-size: .9em;
+    color: rgb(93, 92, 92);
 }
 
-.form-wrapper input, .form-wrapper select {
+.multi_line_info {
+    font-family: var(--Poppins);
+    color: #676767;
+    font-size: .7em;
+}
+
+
+.form-wrapper input, .form-wrapper select, .form-wrapper textarea {
     padding: .7em .3em;
-    border: none;
     color: var(--Bluis-Gray);
     font-family: var(--Poppins);
     font-weight: 400;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgb(10, 9, 9);
+}
+
+.checkbox input {
+    padding: .7em .3em;
+    color: var(--Bluis-Gray);
+    font-family: var(--Poppins);
+    font-weight: 400;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgb(10, 9, 9);
+    margin-bottom: 1.2em;
 }
 
 .phone-message {
@@ -139,30 +157,44 @@ body {
 }
 
 .error-text {
-    color: rgb(251, 9, 9);
+    color: var(--theme-color);
     font-size: .8em;
     font-family: var(--Poppins);
 }
 
-.member-add {
+.member_add {
     cursor: pointer;
     margin: 1em 0em;
     margin-top: 2em;
     padding: .7em 1.5em;
-    background-color: var(--white-smoke);
+    background-color: var(--theme-color);
     border: none;
     font-family: var(--Poppins);
     font-size: 15px;
     font-weight: 400;
-    color: var(--theme-color);
+    color: var(--white-smoke);
     transition: transform 1.1s;
 }
 
-.member-add:hover {
+.member_add:hover {
     transform: scale(.9);
 }
 
+.heref{
+    display: none;
+    color: #201f1f;
+    margin-top: .5em;
+    font-family: var(--Montserrat);
+    font-size: .9em;
+}
 @media screen and (min-width: 580px) {
+    .container-wrapper form {
+        width: 550px;
+    }
+}
+
+/* Here remove the picture  */
+@media screen and (min-width: 760px) {
     .container-wrapper form {
         width: 550px;
     }

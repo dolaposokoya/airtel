@@ -4,9 +4,9 @@ include('./sendMail.php');
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $_SESSION["ID"] = 100;
     include('../database.php');
-    $response = createHospitalTableIfNotExist($conn);
+    $response = createAirtelCugTable($conn);
     if ($response == 1) {
-        insertMember($conn);
+        makeCugRequest($conn);
     } else {
         $data['success'] = $response;
         $data['status'] = 200;
@@ -46,20 +46,17 @@ function checkIfHospitalExist($conn)
 }
 
 
-function createHospitalTableIfNotExist($conn)
+function createAirtelCugTable($conn)
 {
-    $sql = "CREATE TABLE IF NOT EXISTS hospitals (
+    $sql = "CREATE TABLE IF NOT EXISTS airtel_cug (
         id INT(20) UNSIGNED AUTO_INCREMENT  PRIMARY KEY NOT NULL,
-        hospital_id varchar(255) DEFAULT NULL,
-        hospital_name varchar(255) DEFAULT NULL,
-        reg_number varchar(255) DEFAULT NULL,
-        hospital_email varchar(256) NOT NULL,
-        address varchar(256) NOT NULL,
-        state varchar(256) NOT NULL,
-        lga varchar(256) NOT NULL,
-        contact_name varchar(256) NOT NULL,
-        contact_email varchar(256) NOT NULL,
+        profile_id varchar(255) DEFAULT NULL,
+        name varchar(255) NOT NULL,
         contact_mobile varchar(256) NOT NULL,
+        multi_line_number varchar(255) DEFAULT NULL,
+        airtel_number varchar(256) DEFAULT NULL,
+        other_number varchar(256) DEFAULT NULL,
+        smedan_number varchar(255) DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       )";
@@ -71,60 +68,37 @@ function createHospitalTableIfNotExist($conn)
 }
 
 
-function insertMember($conn)
+function makeCugRequest($conn)
 {
     try {
-        $hospital_name = test_data($_POST['hospital_name']);
-        $reg_number = test_data($_POST['reg_number']);
-        $hospital_email = test_data($_POST['hospital_email']);
-        $address = test_data($_POST['address']);
-        $state = test_data($_POST['state']);
-        $lga = test_data($_POST['lga']);
-        $contact_name = test_data($_POST['contact_name']);
-        $contact_email = test_data($_POST['contact_email']);
+        $name = test_data($_POST['name']);
         $contact_mobile = test_data($_POST['contact_mobile']);
-        if (!empty($hospital_name) && !empty($reg_number)) {
-            if (!filter_var($_POST['hospital_email'], FILTER_VALIDATE_EMAIL) && !filter_var($_POST['contact_email'], FILTER_VALIDATE_EMAIL)) {
+        $multi_line_number = test_data($_POST['multi_line_number']);
+        $airtel_number = test_data($_POST['airtel_number']);
+        $other_number = test_data($_POST['other_number']);
+        $smedan_number = test_data($_POST['smedan_number']);
+        if (!empty($name) && !empty($contact_mobile) && !empty($smedan_number)) {
+            $profile_id =  uniqid(5);
+            $query = "INSERT INTO airtel_cug (profile_id,name, contact_mobile,multi_line_number, airtel_number,other_number, smedan_number) VALUES ('" . mysqli_real_escape_string($conn, $profile_id) . "','" . mysqli_real_escape_string($conn, $name) . "','" . mysqli_real_escape_string($conn, $contact_mobile) . "','" . mysqli_real_escape_string($conn, $multi_line_number) . "','" . mysqli_real_escape_string($conn, $airtel_number) . "','" . mysqli_real_escape_string($conn, $other_number) . "','" . mysqli_real_escape_string($conn, $smedan_number) . "');";
+            $result = mysqli_query($conn, $query);
+            if ($result == 0) {
                 $data['success'] = false;
-                $data['status'] = "invalid";
-                $data['message'] = "Invalid Email";
+                $data['status'] = 200;
+                $data['message'] = "Error while registering your request";
             } else {
-                $hospital_email = strtolower($hospital_email);
-                $contact_email = strtolower($contact_email);
-                $hospital_id =  uniqid(5);
-                $query = "INSERT INTO hospitals (hospital_id,hospital_name, reg_number,hospital_email, address,state,lga,contact_name,contact_email,contact_mobile) VALUES ('" . mysqli_real_escape_string($conn, $hospital_id) . "','" . mysqli_real_escape_string($conn, $hospital_name) . "','" . mysqli_real_escape_string($conn, $reg_number) . "','" . mysqli_real_escape_string($conn, $hospital_email) . "','" . mysqli_real_escape_string($conn, $address) . "','" .
-                    mysqli_real_escape_string($conn, $state) . "','" . mysqli_real_escape_string($conn, $lga) . "','" .
-                    mysqli_real_escape_string($conn, $contact_name) . "','" .
-                    mysqli_real_escape_string($conn, $contact_email) . "','" .
-                    mysqli_real_escape_string($conn, $contact_mobile) . "');";
-                $result = mysqli_query($conn, $query);
-                if ($result == 0) {
-                    $data['success'] = false;
-                    $data['status'] = 200;
-                    $data['message'] = "Error while registering hospital";
-                } else {
-                    $mailresult =  sendMail($hospital_email, $hospital_name);
-                    if ($mailresult && $mailresult['success'] == true) {
-                        $data['success'] = true;
-                        $data['status'] = 200;
-                        $data['message'] = "Hospital registered successfully for the Patients' Bill of Rights! Please Check your email";
-                    } else {
-                        $data['success'] = false;
-                        $data['status'] = 200;
-                        $data['message'] = "Hospital registered successfully for the Patients' Bill of Rights! but unable to send email to your registerd email {$hospital_email}";
-                    }
-                }
+                $data['success'] = true;
+                $data['status'] = 200;
+                $data['message'] = "Your request is being processed";
             }
         } else {
             $data['success'] = false;
             $data['status'] = 403;
-            $data['message'] = "Error Occured!";
+            $data['message'] = "Some fields are empty";
         }
     } catch (Exception $error) {
         $data['success'] = false;
         $data['status'] = 500;
         $data['message'] = $error->getMessage();
     }
-
     echo json_encode($data);
 }

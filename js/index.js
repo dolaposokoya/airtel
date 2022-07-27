@@ -1,17 +1,15 @@
-const hospital_name = document.getElementById('hospital_name');
-const reg_number = document.getElementById('reg_number');
-const hospital_email = document.getElementById('hospital_email');
-const address = document.getElementById('address');
-const state = document.getElementById('state');
-const lga = document.getElementById('lga');
-const contact_name = document.getElementById('contact_name');
-const contact_email = document.getElementById('contact_email');
-const contact_mobile = document.getElementById('contact_mobile');
+const user_name = document.getElementById('name');
+const multi_line = document.getElementById('multi_line');
+const multi_line_number = document.getElementById('multi_line_number');
+const new_line = document.getElementById('new_line');
+const other_number = document.getElementById('other_number');
+const airtel_number = document.getElementById('airtel_number');
+const contact_mobile = document.getElementById('contact_number');
+const smedan_register = document.getElementById('smedan_register');
+const smedan_no = document.getElementById('smedan_no');
+
 
 let error = false;
-let states = [];
-let stateLga = [];
-let localGoverment = {};
 
 $(document).ready(async () => {
     setTimeout(() => {
@@ -20,56 +18,8 @@ $(document).ready(async () => {
             scrollTop: $('form').offset().top
         }, 'slow');
     }, 1200);
-    $(".modal-text").text('Note: \n If you have other branches please register them separately for documentation, this only registers this particular hospital');
-    $('.modal').css('display', 'flex')
 })
 
-
-$('#state').on('change', function () {
-    try {
-        localGoverment[this.value].map(item => {
-            const { name, abrv } = item
-            $('#lga').append(`
-        <option name=${item}>${item}</option>
-        `)
-        })
-    } catch (error) {
-        $(".alert-warning").text(error.message);
-        $(".messages").css('display', 'flex');
-        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
-    }
-});
-
-$(document).ready(async () => {
-    try {
-        const url = './state.json';
-        const lgaurl = './lga.json';
-        const headers = new Headers();
-        headers.append('Accept', 'application/json');
-        const options = {
-            method: 'GET',
-            headers
-        }
-        const result = await fetch(url, options)
-        const lgaRresult = await fetch(lgaurl, options)
-        const response = await result.json();
-        const lgaRresponse = await lgaRresult.json();
-        const { ruawi_states } = response
-        const { lgaList } = lgaRresponse
-        states = ruawi_states;
-        localGoverment = lgaList;
-        ruawi_states.map(item => {
-            const { name, abrv } = item
-            $('#state').append(`
-            <option name=${abrv}>${name}</option>
-            `)
-        })
-    } catch (error) {
-        $(".alert-warning").text(error.message);
-        $(".messages").css('display', 'flex');
-        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
-    }
-})
 
 const closeMessage = async () => {
     $('.messages').css('display', 'none')
@@ -83,174 +33,259 @@ const closeModal = async (event) => {
 
 const validateInput = async () => {
     let valid = true;
-    const hospital_nameError = {};
-    const reg_numberError = {};
-    const hospital_emailError = {};
-    const addressError = {};
-    const stateError = {};
-    const lgaError = {};
-    const contact_nameError = {};
-    const contact_emailError = {};
-    const contact_mobileError = {};
-
-    $(".hospital_name").text('');
-    $(".reg_number").text('');
-    $(".hospital_email").text('');
-    $(".address").text('');
-    $(".state").text('');
-    $(".lga").text('');
-    $(".contact_name").text('');
-    $(".contact_email").text('');
-    $(".contact_mobile").text('');
+    $('.new_line').text('')
+    $('.multiple_new_line').text('')
     $(".messages").css('display', 'none');
+    if (multi_line.value === 'Select option') {
+        $('.multiple_new_line').text('Please select an option')
+        valid = false;
+    }
+    if (multi_line.value === 'Yes') {
+        if (multi_line_number.value === '') {
+            valid = false;
+        }
+    }
+    if (multi_line.value === 'No') {
+        error = false
+    }
+    if (new_line.value === 'Select option') {
+        $('.new_line').text('Please select an option')
+        valid = false;
+    }
+    if (new_line.value === 'No') {
+        if (airtel_number.value === '') {
+            valid = false;
+        }
+    }
+    if (new_line.value === 'Yes') {
+        if (other_number.value === '') {
+            valid = false;
+        }
+    }
+    if (smedan_no.value === '') {
+        valid = false;
+    }
 
-
-    if (hospital_name.value === '') {
-        hospital_nameError.empty = 'Hospital name is required';
-        valid = false;
-    }
-    if (reg_number.value === '') {
-        reg_numberError.empty = 'Registration number is required';
-        valid = false;
-    }
-    if (hospital_email.value === '') {
-        hospital_emailError.empty = 'Hospital email is required';
-        valid = false;
-    }
-    if (address.value === '') {
-        addressError.empty = 'Address is required';
-        valid = false;
-    }
-    if (state.value === '' || state.value === 'Select state') {
-        stateError.empty = 'State is required';
-        valid = false;
-    }
-    if (lga.value === '' || lga.value === 'Select local government') {
-        lgaError.empty = 'Local government is required';
-        valid = false;
-    }
-    if (contact_name.value === '') {
-        contact_nameError.empty = 'Contact person name is required';
-        valid = false;
-    }
-    if (contact_email.value === '') {
-        contact_emailError.empty = 'Contact person email is required';
-        valid = false;
-    }
-    if (contact_mobile.value === '') {
-        contact_mobileError.empty = 'Phone is required';
-        valid = false;
-    }
-    if (contact_mobile.value.length < 11) {
-        contact_mobileError.length = 'Phone should be 11 characters or more';
-        valid = false;
-    }
-    return {
-        hospital_nameError, reg_numberError, hospital_emailError, addressError, stateError, lgaError, contact_nameError,
-        contact_emailError, contact_mobileError, valid
-    }
+    return { valid }
 }
 
-const becomeAMember = async (event) => {
-    event.preventDefault();
-    const formData = {};
-    const { hospital_nameError, reg_numberError, hospital_emailError, addressError, stateError, lgaError, contact_nameError,
-        contact_emailError, contact_mobileError, valid } = await validateInput();
-    $(document).ready(async () => {
-        $('.loader').css('display', 'flex')
-    })
-    if (valid === false) {
-        $(document).ready(async () => {
-            $('.loader').css('display', 'none')
-        })
-        $(".alert-warning").text('Some fields are empty');
-        $(".messages").css('display', 'flex');
-        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
-        setTimeout(() => {
-            $(".messages").css('display', 'none');
-        }, 5000);
-        Object.keys(hospital_nameError).map(item => {
-            $(".hospital_name").text(hospital_nameError[item]);
-        })
-        Object.keys(reg_numberError).map(item => {
-            $(".reg_number").text(reg_numberError[item]);
-        })
-        Object.keys(hospital_emailError).map(item => {
-            $(".hospital_email").text(hospital_emailError[item]);
-        })
-        Object.keys(addressError).map(item => {
-            $(".address").text(addressError[item]);
-        })
-        Object.keys(stateError).map(item => {
-            $(".state").text(stateError[item]);
-        })
-        Object.keys(lgaError).map(item => {
-            $(".lga").text(lgaError[item]);
-        })
-        Object.keys(contact_nameError).map(item => {
-            $(".contact_name").text(contact_nameError[item]);
-        })
-        Object.keys(contact_emailError).map(item => {
-            $(".contact_email").text(contact_emailError[item]);
-        })
-        $(".contact_mobile").text(contact_mobileError.empty);
-        $(".phone_length").text(contact_mobileError.length);
-    }
-    else {
-
+const registerForCug = async (event) => {
+    try {
+        event.preventDefault();
+        const formData = {};
+        const { valid } = await validateInput();
         $(document).ready(async () => {
             $('.loader').css('display', 'flex')
         })
-        formData.hospital_name = hospital_name.value
-        formData.reg_number = reg_number.value
-        formData.hospital_email = hospital_email.value
-        formData.address = address.value
-        formData.state = state.value
-        formData.lga = lga.value
-        formData.contact_name = contact_name.value
-        formData.contact_email = contact_email.value
-        formData.contact_mobile = contact_mobile.value
-        const apiURl = `controllers/register.php`;
-        $.ajax({
-            method: "POST",
-            url: apiURl,
-            dataType: 'json',
-            data: formData,
-            beforeSend: function (data) {
-                $(".member-add").html("Sending....");
-                setTimeout(() => { $(".member-add").html("Register"); }, 5000);
-            },
-            success: async (data) => {
-                if (data) {
-                    if (data.success === false) {
-                        $(document).ready(async () => {
-                            $('.loader').css('display', 'none')
-                        })
+        if (valid === false) {
+            $(document).ready(async () => {
+                $('.loader').css('display', 'none')
+            })
+            $(".alert-warning").text('Some fields are empty');
+            $(".messages").css('display', 'flex');
+            $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+            setTimeout(() => {
+                $(".messages").css('display', 'none');
+            }, 5000);
+        }
+        else {
+            $(document).ready(async () => {
+                $('.loader').css('display', 'flex')
+            })
+
+            formData.name = user_name.value
+            formData.contact_mobile = contact_mobile.value
+            formData.multi_line_number = multi_line_number.value
+            formData.airtel_number = airtel_number.value
+            formData.other_number = other_number.value
+            formData.smedan_number = smedan_no.value
+            let letter = other_number.value.substring(1);
+            formData.other_number = other_number.value !== '' ? `234${letter}` : '';
+            const apiURl = `controllers/register.php`;
+            console.log('Form Data', JSON.stringify(formData))
+            $.ajax({
+                method: "POST",
+                url: apiURl,
+                dataType: 'json',
+                data: formData,
+                beforeSend: function (data) {
+                    $(".member_add").html("Sending Request....");
+                    setTimeout(() => { $(".member_add").html("Submit Request") }, 3500);
+                },
+                success: async (data) => {
+                    if (data) {
+                        if (data.success === false) {
+                            $(document).ready(async () => {
+                                $('.loader').css('display', 'none')
+                            })
+                            error = true;
+                            $(".modal-text").text(data.message);
+                            $(".modal").css('display', 'flex');
+                            setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+
+                        }
+                        else if (data.success === true) {
+                            $(document).ready(async () => {
+                                $('.loader').css('display', 'none')
+                            })
+                            error = false;
+                            $(".modal-text").text(data.message);
+                            $(".modal").css('display', 'flex');
+                            clearInput()
+                            $(".warning").css('background-color', 'hsl(134, 61%, 41%)');
+                            setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
+                        }
+                    }
+                    else {
                         error = true;
-                        $(".modal-text").text(data.message);
+                        $(".modal-text").text('Something went wrong');
                         $(".modal").css('display', 'flex');
-                        setTimeout(() => { $(".member-add").html("Register") }, 2500);
-
-                    }
-                    else if (data.success === true) {
-                        $(document).ready(async () => {
-                            $('.loader').css('display', 'none')
-                        })
-                        error = false;
-                        $(".modal-text").text(data.message);
-                        $(".modal").css('display', 'flex');
-                        $(".warning").css('background-color', 'hsl(134, 61%, 41%)');
-
-                        setTimeout(() => { $(".member-add").html("Register") }, 2500);
+                        setTimeout(() => { $(".member_add").html("Submit Request") }, 2500);
                     }
                 }
-                else {
-                    error = true;
-                    $(".modal-text").text('Something went wrong');
-                    $(".modal").css('display', 'flex');
-                    setTimeout(() => { $(".member-add").html("Register") }, 2500);
-                }
-            }
-        });
+            });
+        }
+    } catch (error) {
+        $(".modal-text").text(error.message);
+        $(".modal").css('display', 'flex');
     }
+}
+
+function changeTextToUpperCase(event) {
+    setTimeout(function () {
+        event.value = event.value.toUpperCase();
+        if (event.value === '') {
+            $(`.${event.id}`).text(`${event.placeholder} is empty`)
+        }
+        else if (event.value !== "") {
+            $(`.${event.id}`).text('')
+        }
+    }, 3);
+}
+
+function checkTextInput(event) {
+    setTimeout(() => {
+        if (event.value === '') {
+            $(`.${event.id}`).text(`Please enter ${event.placeholder}`)
+        }
+        else {
+            $(`.${event.id}`).text('')
+        }
+    }, 1);
+}
+function focusText(event) {
+    setTimeout(() => {
+        if (event.value === '') {
+            $(`.${event.id}`).text(`${event.placeholder} is empty`)
+        }
+        else {
+            $(`.${event.id}`).text('')
+        }
+    }, 1);
+}
+
+
+function checkNumberInput(event) {
+    setTimeout(function () {
+        if (event.value.length < 11) {
+            $(`.${event.id}`).text('Phone number should be 11')
+        }
+        else if (event.value.length === 11) {
+            $(`.${event.id}`).text('')
+        }
+    }, 1)
+}
+
+// $('#smedan_no').on('focus', function () {
+//     try {
+//         setTimeout(() => {
+//             if (this.value === '') {
+//                 $(`.${this.id}`).text(`Please enter ${this.placeholder}`)
+//             }
+//             else {
+//                 console.log('event value not empty onfocus', this.value && this.value)
+//                 $(`.${this.id}`).text('')
+//             }
+//         }, 1);
+//         console.log('this.value onfocus', this.name)
+//     } catch (error) {
+//         $(".alert-warning").text(error.message);
+//         $(".messages").css('display', 'flex');
+//         $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+//     }
+// });
+
+$('#smedan_register').on('change', function () {
+    try {
+        if (this.value === 'Select option') {
+            $(`.smedan_register`).text(`Please select option`)
+        }
+        else if (this.value === 'No') {
+            // $('.smedan_register').text('Please register your business here');
+            $('.heref').css('display', 'flex');
+            $('.heref').fadeIn('slow');
+        }
+        else {
+            $(`.smedan_register`).text('')
+            $('.heref').css('display', 'none');
+            $('.heref').fadeOut('slow');
+        }
+    } catch (error) {
+        $(".alert-warning").text(error.message);
+        $(".messages").css('display', 'flex');
+        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+    }
+});
+$('#multi_line').on('change', function () {
+    try {
+        if (this.value === 'Select option') {
+            $(`.multiple_new_line`).text(`Please select option`)
+        }
+        else if (this.value === 'Yes') {
+            $('.multi_view').fadeIn('slow');
+            $('.multi_view').css('display', 'flex');
+            $('.multi_line_info').text('Enter number and seperate them by comma');
+        }
+        else {
+            $(`.${this.name}`).text('')
+            $('.multi_view').fadeOut('slow');
+            $('.multi_view').css('display', 'none');
+        }
+    } catch (error) {
+        $(".alert-warning").text(error.message);
+        $(".messages").css('display', 'flex');
+        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+    }
+});
+
+$('#new_line').on('change', function () {
+    try {
+        if (this.value === 'Select option') {
+            console.log('Length than 11')
+            $(`.${this.name}`).text('is empty')
+        }
+        else if (this.value === 'No') {
+            $('.no_new_line').fadeIn('slow');
+            $('.no_new_line').css('display', 'flex');
+            $('.yes_new_line').fadeOut('slow');
+            $('.yes_new_line').css('display', 'none');
+        }
+        else if (this.value === 'Yes') {
+            $(`.${this.name}`).text('')
+            $('.no_new_line').fadeOut('slow');
+            $('.no_new_line').css('display', 'none');
+            $('.yes_new_line').fadeIn('slow');
+            $('.yes_new_line').css('display', 'flex');
+        }
+        console.log('New line', this.name)
+    } catch (error) {
+        $(".alert-warning").text(error.message);
+        $(".messages").css('display', 'flex');
+        $(".warning").css('background-color', 'hsl(45, 100%, 51%)');
+    }
+});
+
+const clearInput = async () => {
+    $("#name").val('');
+    $("#airtel_number").val('');
 }

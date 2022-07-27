@@ -3,15 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" size="48x48"/>
-    <link rel="icon" type="image/x-icon" href="./assets/favicon-16x16.png" size="16x16"/>
-    <link rel="icon" type="image/x-icon" href="./assets/favicon-32x32.png" size="32x32"/>
-    <link rel="icon" type="image/x-icon" href="./assets/favicon-32x32.png" size="32x32"/>
-    <link rel="icon" type="image/x-icon" href="./assets/android-chrome-192x192.png" size="192x192"/>
-    <link rel="icon" type="image/x-icon" href="./assets/android-chrome-512x512.png" size="512x512"/>
-    <link rel="apple-touch-icon" type="image/x-icon" href="./assets/apple-touch-icon.png" size="192x192"/>
+    <link rel="icon" type="image/x-icon" href="./favicon.png" size="100x100" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" size="48x48" />
+    <link rel="apple-touch-icon" type="image/x-icon" href="./assets/apple-touch-icon.png" size="192x192" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-    <meta name="description" content="Support FCCPC">
     <?php
     include('./shared/meta.php');
     ?>
@@ -20,11 +15,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-    <link rel="stylesheet" href="./styles/footer.css"/>
-    <link rel="stylesheet" href="./styles/header.css"/>
-    <link rel="stylesheet" href="./styles/index.css"/>
-    <link rel="stylesheet" href="./styles/modal.css"/>
-    <title>Register For Patients' Bill of Rights | Support Federal Competition & Consumer Protection Commission | FCCPC Bill of Rights</title>
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <link rel="stylesheet" href="./styles/modal.css" />
+    <title>Register Your Airtel Sim For Close User Group (CUG) </title>
 </head>
 <?php
 include("./root.php");
@@ -32,7 +26,7 @@ include("./root.php");
 
 <body>
     <?php
-    include("./shared/loader.php");
+    // include("./shared/loader.php");
     ?>
     <div class="modal">
         <div class="modal-body">
@@ -43,8 +37,11 @@ include("./root.php");
     </div>
     <div class="center">
         <div class="header">
-            <a class="logoContainer" href="https://www.fccpc.gov.ng/" target="_blank">
-                <img src="./assets/fccpc.png" class="logo" />
+            <a class="logoContainer" href="https://airtel.africa" target="_blank">
+                <img src="./assets/airtel.png" class="logo" />
+            </a>
+            <a class="logoContainer" href="https://smedan.gov.ng" target="_blank">
+                <img src="./assets/smedanlogo.png" class="logo smedan" />
             </a>
         </div>
     </div>
@@ -55,7 +52,6 @@ include("./root.php");
                     <div class="message">
                         <div class="warning">
                             <p class="alert alert-warning" id="warning_alert" role="alert">
-
                             </p>
                             <img src="./assets/cross.png" alt="close-icon" class="cross" onclick="closeMessage(event)" />
                         </div>
@@ -64,77 +60,84 @@ include("./root.php");
                 <form autocomplete="on">
                     <div class="form-wrapper">
                         <div class="icons">
-                            <label>Hospital Name</label>
+                            <label>Full Name</label>
                         </div>
-                        <input placeholder="Name of hospital" name="hospital_name" type="text" class="form-input" id="hospital_name" autocomplete="off" required />
-                        <span class="error-text hospital_name"></span>
+                        <input placeholder="Full Name" name="name" type="text" class="form-input" id="name" autocomplete="off" required onfocus="focusText(this)" onkeydown="changeTextToUpperCase(this)" />
+                        <span class="error-text name"></span>
                     </div>
                     <div class="form-wrapper">
                         <div class="icons">
-                            <label>Registration Number</label>
+                            <label>Contact Number</label>
                         </div>
-                        <input placeholder="Registration Number" name="reg_number" type="text" class="form-input" id="reg_number" autocomplete="off" required />
-                        <span class="error-text reg_number"></span>
+                        <input placeholder="Contact Number" name="Contact Number" type="text" class="form-input" id="contact_number" autocomplete="off" required onfocus="focusText(this)" onkeydown="changeTextToUpperCase(this)" />
+                        <span class="error-text contact_number"></span>
                     </div>
                     <div class="form-wrapper">
                         <div class="icons">
-                            <label>Company Email</label>
+                            <label>Do You Have Multiple Airtel Lines</label>
                         </div>
-                        <input placeholder="Company Email" name="email" type="email" class="form-input" id="hospital_email" autocomplete="off" required />
-                        <span class="error-text hospital_email"></span>
+                        <select name="Multiple Lines" id="multi_line">
+                            <option>Select option</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                        <span class="error-text multiple_new_line"></span>
+                    </div>
+                    <div class="form-wrapper multi_view">
+                        <div class="icons">
+                            <label>Multiple Airtel Lines Of Airtel</label>
+                        </div>
+                        <textarea placeholder="Multiple Lines Of Airtel" type="tel" class="form-input" id="multi_line_number" autocomplete="off" required onfocus="focusText(this)" onkeydown="checkTextInput(this)"></textarea>
+                        <span class="multi_line_info"></span>
+                        <span class="error-text multi_line_number"></span>
                     </div>
                     <div class="form-wrapper">
                         <div class="icons">
-                            <label>Street Address</label>
+                            <label>Need A New Airtel Line</label>
                         </div>
-                        <textarea placeholder="Address" name="address" type="address" class="form-input" id="address" autocomplete="off" required style="padding-left: .5em; padding-top: .5em"></textarea>
-                        <span class="error-text address"></span>
+                        <select name="New Line" id="new_line">
+                            <option>Select option</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                        <span class="error-text new_line"></span>
                     </div>
-                    <div class="address-wrapper">
-                        <div class="form-wrapper">
-                            <div class="icons">
-                                <label>State</label>
-                            </div>
-                            <select name="state" id="state" required>
-                                <option>Select state</option>
-                            </select>
-                            <span class="error-text state"></span>
+                    <div class="form-wrapper no_new_line">
+                        <div class="icons">
+                            <label>Airtel Number</label>
                         </div>
-                        <div class="form-wrapper">
-                            <div class="icons">
-                                <label>Local Government</label>
-                            </div>
-                            <select name="lga" id="lga" required>
-                                <option>Select local government</option>
-                            </select>
-                            <span class="error-text lga"></span>
+                        <input placeholder="Airtel Number" name="airtel_number" type="tel" class="form-input" id="airtel_number" autocomplete="off" required onfocus="focusText(this)" onkeydown="checkNumberInput(this)" />
+                        <span class="error-text airtel_number"></span>
+                    </div>
+                    <div class="form-wrapper yes_new_line">
+                        <div class="icons">
+                            <label>Other Number</label>
                         </div>
+                        <input placeholder="Other Number" name="other_number" type="tel" class="form-input" id="other_number" autocomplete="off" required onfocus="focusText(this)" onkeydown="checkNumberInput(this)" />
+                        <span class="error-text other_number"></span>
                     </div>
                     <div class="form-wrapper">
                         <div class="icons">
-                            <label>Contact Person Name</label>
+                            <label>Do You Have A SMEDAN Registration Number</label>
                         </div>
-                        <input placeholder="Contact Person Name" name="contact_name" type="text" class="form-input" id="contact_name" autocomplete="off" required />
-                        <span class="error-text contact_name"></span>
+                        <select name="New Line" id="smedan_register">
+                            <option>Select option</option>
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                        <span class="error-text smedan_register"></span>
+                      <span>  <a href="https://smedanregister.ng/" class="heref" target="_blank">Click here to register your SMEDAN business</a></span>
                     </div>
                     <div class="form-wrapper">
                         <div class="icons">
-                            <label>Contact Person Email</label>
+                            <label>SMEDAN Number</label>
                         </div>
-                        <input placeholder="Contact Person Email" name="contact_email" type="email" class="form-input" id="contact_email" autocomplete="off" required />
-                        <span class="error-text contact_email"></span>
-                    </div>
-                    <div class="form-wrapper">
-                        <div class="icons">
-                            <label>Contact Person Mobile</label>
-                        </div>
-                        <input placeholder="Contact Person Mobile" name="contact_mobile" type="tel" class="form-input" id="contact_mobile" autocomplete="off" required />
-                        <span class="error-text contact_mobile"></span>
-                        <span class="error-text phone_length"></span>
+                        <input placeholder="SMEDAN Number" name="smedan_no" type="text" class="form-input" id="smedan_no" autocomplete="off" required onfocus="focusText(this)" onkeydown="checkTextInput(this)" />
+                        <span class="error-text smedan_no"></span>
                     </div>
                     <div class="member-btn">
-                <button class="member-add" onclick="becomeAMember(event)">Become A Volunteer</button>
-            </div>
+                        <button class="member_add" onclick="registerForCug(event)">Register</button>
+                    </div>
             </div>
             </form>
         </div>

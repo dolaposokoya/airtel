@@ -83,7 +83,8 @@
 
 .modal-text {
     margin-top: 1em;
-    color: var(--theme-color);
+    /* color: var(--theme-color); */
+    color: var(--charcoal);
     text-align: center;
     font-size: 1.2em;
     font-weight: 700;

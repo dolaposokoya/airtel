@@ -1,0 +1,11 @@
+Question before regisration
+1) Are you an Small Medium Enterprise(SME) operating in Nigeria
+
+
+Add smedan registration number to the form input, if they don't have tell the them to open smedan page to register
+
+Add a link to know more about airtel smefix
+
+
+ODU
+Name, phonenumber, address

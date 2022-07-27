@@ -9,7 +9,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0em .7em;
-    width: 100vw;
+    width: 97vw;
     background-color: white;
     overflow: hidden;
 }
@@ -20,7 +20,11 @@
 
 .logoContainer img {
     width: 90px;
-    height: 60px;
+    /* height: 60px; */
+}
+.smedan {
+    width: 150px !important;
+    /* height: 60px; */
 }
 
 
